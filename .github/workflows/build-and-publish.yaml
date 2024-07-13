@@ -1,6 +1,6 @@
----
 name: build
-"on":
+
+on:
   workflow_call:
     inputs:
       mainPipeline:
@@ -8,6 +8,7 @@ name: build
         default: false
         required: false
         type: boolean
+
 jobs:
   build:
     runs-on: ubuntu-22.04

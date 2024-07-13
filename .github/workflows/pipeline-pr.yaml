@@ -1,11 +1,13 @@
----
 name: pipeline-pr
-"on":
-  pull_request: null
-  workflow_dispatch: null
+
+on:
+  pull_request:
+  workflow_dispatch:
+
 concurrency:
-  group: "pr-my-spring-boot-app-pipeline-${{ github.event.pull_request.number }}"
-#  cancel-in-progress: true
+  group: pr-my-spring-boot-app-pipeline-${{ github.event.pull_request.number }}
+  # cancel-in-progress: true
+
 jobs:
   call-build:
     uses: ./.github/workflows/build-and-publish.yaml

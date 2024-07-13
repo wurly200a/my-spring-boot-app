@@ -1,12 +1,14 @@
----
 name: pipeline-main
-"on":
+
+on:
   push:
     branches:
-    - main
+      - main
+
 concurrency:
   group: evp-api-main-pipeline
-#  cancel-in-progress: false
+  # cancel-in-progress: false
+
 jobs:
   call-build:
     uses: ./.github/workflows/build-and-publish.yaml
