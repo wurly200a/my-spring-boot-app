@@ -10,8 +10,23 @@ concurrency:
   # cancel-in-progress: false
 
 jobs:
+  get-pr-number:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get the PR number
+        id: get_pr
+        run: |
+          PR_NUMBER=$(gh pr list --state closed --base main --json number --jq '.[0].number')
+          echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
+          echo "PR Number: $PR_NUMBER"
+
   call-build:
+    needs: get-pr-number
     uses: ./.github/workflows/build-and-publish.yaml
     secrets: inherit
     with:
       mainPipeline: true
+      prNumber: ${{ env.PR_NUMBER }}
