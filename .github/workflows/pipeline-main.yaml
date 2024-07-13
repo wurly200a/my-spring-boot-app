@@ -20,6 +20,8 @@ jobs:
 
       - name: Get the PR number
         id: get_pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           PR_NUMBER=$(gh pr list --state closed --base main --json number --jq '.[0].number')
           echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
