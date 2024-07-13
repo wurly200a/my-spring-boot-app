@@ -13,10 +13,16 @@ public class DemoApplication {
     }
 
     @RestController
-    class HelloController {
+    class DemoAppController {
+
         @GetMapping("/hello")
         public String hello() {
             return "Hello, World!";
+        }
+
+        @GetMapping("/version")
+        public String version() {
+            return "0.0.1";
         }
     }
 }
