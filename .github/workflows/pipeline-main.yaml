@@ -12,6 +12,8 @@ concurrency:
 jobs:
   get-pr-number:
     runs-on: ubuntu-22.04
+    outputs:
+      pr_number: ${{ steps.get_pr.outputs.pr_number }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,6 +23,7 @@ jobs:
         run: |
           PR_NUMBER=$(gh pr list --state closed --base main --json number --jq '.[0].number')
           echo "PR_NUMBER=${PR_NUMBER}" >> $GITHUB_ENV
+          echo "::set-output name=pr_number::${PR_NUMBER}"
           echo "PR Number: $PR_NUMBER"
 
   call-build:
@@ -29,4 +32,4 @@ jobs:
     secrets: inherit
     with:
       mainPipeline: true
-      prNumber: ${{ env.PR_NUMBER }}
+      prNumber: ${{ needs.get-pr-number.outputs.pr_number }}
