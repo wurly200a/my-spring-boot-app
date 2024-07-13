@@ -1,0 +1,15 @@
+---
+name: pipeline-main
+"on":
+  push:
+    branches:
+    - main
+concurrency:
+  group: evp-api-main-pipeline
+#  cancel-in-progress: false
+jobs:
+  call-build:
+    uses: ./.github/workflows/build-and-publish.yaml
+    secrets: inherit
+    with:
+      mainPipeline: true
